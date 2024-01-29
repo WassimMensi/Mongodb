@@ -30,34 +30,8 @@ mysql / mongo
 - objet
 - null
 
-# Commandes
-- ajouter : db.someColl.insertOne({"key":"valeur"})
-- supprimer une bdd : db.dropDatabase()
-- créer une base :  db.createCollection(
-"maCollection",  
-"collation": {  
-"locale": "fr",  
-"caseLevel": false,  
-"strength": 3,  
-"numericOrdering": false,  
-"alternate": "non-ignorable",  
-"backwards": false,  
-"normalization": false  
+# Commandes de base
 
-}  
-
-)
-
-db.collection.updateOne(, )
-
-db.personnes.updateOne(
-
-"nom": "PEYRACHON"
-
-{
-$set : { "nom": "BARRAY" }
-}
-)
 
 ### Chercher de l'information avec MongoDB
 
@@ -72,3 +46,19 @@ db.collection. findOne(
     }
 )
 ```
+
+
+db.users. aggregate(pipeline) .pretty()
+
+## Deuxieme etape du pipeline: $project
+
+var pipeline = [
+
+$match: {
+    "interets": "jardinage"
+}
+
+$project: {
+    "nom": 1,
+    "interets": 1
+}
