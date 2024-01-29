@@ -128,7 +128,7 @@ Exercice 10
 
 Affichez le nom des salles dont au moins un des avis comporte une date postérieure au 15/11/2019 (pensez à utiliser le type JavaScript Date).
 ```
-
+db.salles.find({"avis": {$elemMatch: {"date": { $gt: new Date('2019-11-15') }}}}, { "nom": 1, "_id": 0 });
 ```
 Exercice 11
 
