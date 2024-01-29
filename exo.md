@@ -134,37 +134,38 @@ Exercice 11
 
 Affichez le nom ainsi que la capacité des salles dont le produit de la valeur de l’identifiant par 100 est strictement supérieur à la capacité.
 ```
-
+db.salles.find({$expr: { $gt: [{ $multiply: ["$_id", 100] }, "$capacite"] }}, {_id: true,nom: true,capacite: true})
 ```
 Exercice 12
 
 Affichez le nom des salles de type SMAC programmant plus de deux styles de musiques différents en utilisant l’opérateur $where qui permet de faire usage de JavaScript.
 ```
+db.salles.find({smac: true,$where: function() {return this.styles && this.styles.length > 2;}}, {_id: 0,nom: 1})
 
 ```
 Exercice 13
 
 Affichez les différents codes postaux présents dans les documents de la collection salles.
 ```
-
+db.salles.distinct("adresse.codePostal")
 ```
 Exercice 14
 
 Mettez à jour tous les documents de la collection salles en rajoutant 100 personnes à leur capacité actuelle.
 ```
-
+db.salles.updateMany({}, {$inc: { capacite: 100 }})
 ```
 Exercice 15
 
 Ajoutez le style « jazz » à toutes les salles qui n’en programment pas.
 ```
-
+db.salles.updateMany({styles: {$not :{$elemMatch: {$eq : "jazz"}}}}, {$addToSet :{styles : "jazz"}}	, {_id: true, styles:true})
 ```
 Exercice 16
 
 Retirez le style «funk» à toutes les salles dont l’identifiant n’est égal ni à 2, ni à 3.
 ```
-
+db.salles.updateMany({ _id: { $nin: [2, 3] }, styles: "funk" },{ $pull: { styles: "funk" } } )
 ```
 Exercice 17
 
