@@ -1,0 +1,1 @@
+index = optimiser les opérations de lecture de la bdd
