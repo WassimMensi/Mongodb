@@ -122,7 +122,7 @@ Exercice 9
 
 Affichez le nom des salles dont au moins un des avis comporte une note comprise entre 8 et 10 (tous deux inclus).
 ```
-db.salles.find({avis: {$elemMatch: {note : {$gte : 8, $lte: 10 }}}}, {nom:true})
+db.salles.find({avis: {$elemMatch: {note : {$gte : 8, $lte: 10 }}}}, {nom:true}) / db.salles.find("avis.note" : {$gte : 8, $lte: 10 }, {nom: 1} )
 ```
 Exercice 10
 
@@ -140,7 +140,7 @@ Exercice 12
 
 Affichez le nom des salles de type SMAC programmant plus de deux styles de musiques différents en utilisant l’opérateur $where qui permet de faire usage de JavaScript.
 ```
-db.salles.find({smac: true,$where: function() {return this.styles && this.styles.length > 2;}}, {_id: 0,nom: 1})
+db.salles.find({smac: true,$where: "this.styles.length > 2"}, {_id: 0,nom: 1})
 
 ```
 Exercice 13
@@ -157,7 +157,7 @@ db.salles.updateMany({}, {$inc: { capacite: 100 }})
 ```
 Exercice 15
 
-Ajoutez le style « jazz » à toutes les salles qui n’en programment pas.
+Ajoutez le style « jazz » à toutes les salles qui n’en programment pas. / db.salles.updateMany({"styles" : {$ne : "jazz"}}, {$push : {styles : "jazz"}})
 ```
 db.salles.updateMany({}, {$addToSet :{styles : "jazz"}})
 ```
@@ -195,29 +195,32 @@ Exercice 21
 
 Affichez le décompte des documents pour lesquels le champ _id est de type « objectId ».
 ```
-db.salles.find({_id : {$type : "objectId"}}).count()
+db.salles.find({_id : {$type : "objectId"}}).count() / db.salles.CountDocuments({"_id": {$type : "objectId"}})
 ```
 Exercice 22
 
 Pour les documents dont le champ _id n’est pas de type « objectId », affichez le nom de la salle ayant la plus grande capacité. Pour y parvenir, vous effectuerez un tri dans l’ordre qui convient tout en limitant le nombre de documents affichés pour ne retourner que celui qui comporte la capacité maximale.
 ```
-
+db.salles.find({"_id": {$not: {$type: "objectId"}}}, {"_id": 0, "nom": 1}).sort({"capacite": -1}).limit(1)
 ```
 Exercice 23
 
 Remplacez, sur la base de la valeur de son champ _id, le document créé à l’exercice 20 par un document contenant seulement le nom préexistant et la capacité, que vous monterez à 60 personnes.
 ```
-
+db.salles.replaceOne({"_id": ObjectId("65b8c46c3b8b7cf27bdddc8dé)}, {"nom": "Pub Z", capacite: 60})
 ```
 Exercice 24
 
 Effectuez la suppression d’un seul document avec les critères suivants : le champ _id est de type « objectId » et la capacité de la salle est inférieure ou égale à 60 personnes.
 ```
-
+db.salles.deleteOne({"_id": {$type : "objectId"}, "capacite": {$lte: 60}})
 ```
 Exercice 25
 
 À l’aide de la méthode permettant de trouver un seul document et de le mettre à jour en même temps, réduisez de 15 personnes la capacité de la salle située à Nîmes.
 ```
-
+db.salles.findOneAndUpdate(
+  { "adresse.ville": "Nîmes" },
+  { $inc: { capacite: -15 } }
+);
 ```
