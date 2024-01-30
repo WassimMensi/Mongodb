@@ -50,22 +50,15 @@ db.collection. findOne(
 
 db.users. aggregate(pipeline) .pretty()
 
-## Deuxieme etape du pipeline: $project
-
-var pipeline = [
-
-$match: {
-    "interets": "jardinage"
-}
-
-$project: {
-    "nom": 1,
-    "interets": 1
-}
-
 # Commande docker
 ## Pour lancer mongo avec docker
 - docker pull mongo # récupère l'image mongo
 - docker run -d -p 27017:27017 --name mongo mongo # lance un container mongo
 - docker exec -it mongo /bin/bash # se connecte au container mongo
 - mongosh # lance le shell mongo
+
+## docker import
+- docker run -d -p 27017:27017 --name mongo -v C:\Users\wasso\OneDrive\Desktop\docker:/home mongo
+- docker exec -it mongo /bin/bash
+- aller dans cd /home/
+- mongoimport --db=sample_db --collection=Motor_Vehicle_Collisions --type=csv --headerline --file="Motor_Vehicle_Collisions_-_Crashes_20240130.csv"
