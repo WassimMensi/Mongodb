@@ -62,3 +62,10 @@ db.users. aggregate(pipeline) .pretty()
 - docker exec -it mongo /bin/bash
 - aller dans cd /home/
 - mongoimport --db=sample_db --collection=Motor_Vehicle_Collisions --type=csv --headerline --file="Motor_Vehicle_Collisions_-_Crashes_20240130.csv"
+
+## Explication des options
+- --type: precise le type de fichier, par defaut json
+- -d: nom de la base de données
+- -c/ -- collection: nom de la collection
+- --headerline: indique que la premiere ligne du fichier est le header
+- --drop: supprime la collection avant d'importer les données
