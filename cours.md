@@ -62,3 +62,10 @@ $project: {
     "nom": 1,
     "interets": 1
 }
+
+# Commande docker
+## Pour lancer mongo avec docker
+- docker pull mongo # récupère l'image mongo
+- docker run -d -p 27017:27017 --name mongo mongo # lance un container mongo
+- docker exec -it mongo /bin/bash # se connecte au container mongo
+- mongosh # lance le shell mongo
