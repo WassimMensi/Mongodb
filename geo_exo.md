@@ -20,6 +20,14 @@ var requete = {"adresse.localisation": {
   },
   "styles": { $all: ["blues", "soul"] }
 };
+///////////// ou /////////////
+var requete = {"adresse.localisation": {
+    $geoWithin: {
+      $centerSphere: salle.adresse.localisation, KilometresEnRadians(60)
+    }
+  },
+  "styles": { $in: ["blues", "soul"] }
+};
 
 db.salles.find(requete, { _id: 0, nom: 1 });
 
@@ -88,7 +96,7 @@ var requete = {
     "type": "Point",
     "coordinates": [-73.856077, 40.848447]
 }
-db.neighborhoods.find({geometry : {$geoIntersects : {$geometry : requete}}}, {name:1})
+db.neighborhoods.findOne({geometry : {$geoIntersects : {$geometry : requete}}}, {name:1})
 ```
 
 ### Trouver la requete qui trouve les restaurants dans un rayon donné (8km par exemple)
