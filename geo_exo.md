@@ -53,7 +53,8 @@ var polygone = {
   ],
 };
 
-db.salles.find()
+db.salles.find({"adresse.localisation": {$geoWithin: {$geometry: polygone}}},{ "_id": 0, "nom": 1 })
+
 ```
 
 Donnez le nom des salles qui résident à l’intérieur.
