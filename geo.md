@@ -15,3 +15,7 @@ Pour supprimer un index :
 ```
 db .< collection>.dropIndex({"<champ>": "<type d\'index>"})
 ```
+
+GEOJson est un format open-source pour representer des donnees geographiques. Il est base sur le format
+JSON. Il permet de représenter des points, des lignes, des polygones, des multipoints, des multilignes,
+des multipolygones et des géométries géométriques.
